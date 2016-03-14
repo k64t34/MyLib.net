@@ -1,0 +1,85 @@
+﻿Imports System
+Imports System.Net
+Imports System.Net.Sockets
+Imports System.Text
+Imports System.Globalization
+Imports System.Management
+
+'**********************************************
+Sub RunRemoteProcess(ByVal Host As String,
+	ByVal Cmd As String,
+	ByVal User As String,
+	ByVal Pass As String)
+	'**************************************************************
+		Dim wmi As New  ManagementClass
+        Dim wmi_in, wmi_out As New  ManagementBaseObject
+        Dim retValue As Integer
+
+        Try
+            wmi = New ManagementClass("\\" & Host & "\root\cimv2:Win32_Process")
+            ' get the parameters to the Create method
+            wmi_in = wmi.GetMethodParameters("Create")
+            ' fill in the command line plus any command-line arguments
+            ' NOTE: the command can NOT be on a network resource!
+            wmi_in("CommandLine") = Cmd
+            ' do it!
+            wmi_out = wmi.InvokeMethod("Create", wmi_in, Nothing)
+            ' get the return code.  This not the return code of the
+            ' application... it's a return code for the WMI method
+            retValue = Convert.ToInt32(wmi_out("returnValue"))
+            Select Case retValue
+                Case 0
+                    ' success!
+                Case 2
+                    Throw New ApplicationException("Access denied")
+                Case 3
+                    Throw New ApplicationException("Insufficient privilege")
+                Case 8
+                    Throw New ApplicationException("Unknown failure")
+                Case 9
+                    Throw New ApplicationException("Path not found")
+                Case 21
+                    Throw New ApplicationException("Invalid parameter")
+                Case Else
+                    Throw New ApplicationException("Unknown return code " & retValue)
+            End Select
+        Catch ex As Exception
+            MsgBox(Host & ": Can't create the process. " & ex.Message)
+        End Try
+end sub     
+'***************************************************
+Public Class WOL
+'***************************************************	
+'http://www.zem.fr/net-classe-wake-on-lan-en-vb-net/	
+	Public Shared Sub WakeUp(ByVal MacAddress As String, Optional ByVal BroadCast As String = "255.255.255.255")
+        Dim udp As New UdpClient With {.EnableBroadcast = True}
+        Try
+            udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1)
+            Dim offset As Integer = 0
+            Dim buf(512) As Byte
+
+            'les 6 premiers bytes sont &HFF
+            For i As Integer = 0 To 5
+                buf(offset) = &HFF
+                offset += 1
+            Next
+
+            'on repete l'addresse MAC 16 fois
+            For i As Integer = 0 To 15
+                Dim n As Integer = 0
+                For j As Integer = 0 To 5
+                    buf(offset) = Byte.Parse(MacAddress.Substring(n, 2), NumberStyles.HexNumber)
+                    offset += 1
+                    n += 2
+                Next
+            Next
+
+            'on envoie le wol
+            udp.Send(buf, 512, New IPEndPoint(IPAddress.Parse(BroadCast), &H1))
+
+        Catch ex As Exception
+            udp.Close()
+            Throw ex
+        End Try
+    End Sub
+End Class

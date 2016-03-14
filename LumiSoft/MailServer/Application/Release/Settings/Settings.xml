@@ -1,0 +1,64 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Settings>
+    <MailRoot>c:\MailStore\</MailRoot>
+    <ConnectionString>server=localhost;uid=sa;pwd=;database=lsMail</ConnectionString>
+    <DataBaseType>XML</DataBaseType>
+    <ErrorFile />
+    <SMTP_IPAddress>(All Unassigned)</SMTP_IPAddress>
+    <SMTP_Port>25</SMTP_Port>
+    <SMTP_Threads>200</SMTP_Threads>
+    <POP3_IPAddress>(All Unassigned)</POP3_IPAddress>
+    <POP3_Port>110</POP3_Port>
+    <POP3_Threads>30</POP3_Threads>
+    <SmartHost>mail.neti.ee</SmartHost>
+    <UseSmartHost>False</UseSmartHost>
+    <Dns1>194.126.115.18</Dns1>
+    <Dns2>194.126.101.34</Dns2>
+    <LogServer>True</LogServer>
+    <LogSMTPCmds>False</LogSMTPCmds>
+    <LogPOP3Cmds>False</LogPOP3Cmds>
+    <SMTP_SessionIdleTimeOut>300</SMTP_SessionIdleTimeOut>
+    <SMTP_CommandIdleTimeOut>120</SMTP_CommandIdleTimeOut>
+    <SMTP_MaxBadCommands>8</SMTP_MaxBadCommands>
+    <POP3_SessionIdleTimeOut>300</POP3_SessionIdleTimeOut>
+    <POP3_CommandIdleTimeOut>120</POP3_CommandIdleTimeOut>
+    <POP3_MaxBadCommands>8</POP3_MaxBadCommands>
+    <MaxMessageSize>10</MaxMessageSize>
+    <MaxRecipients>100</MaxRecipients>
+    <MaxRelayThreads>30</MaxRelayThreads>
+    <RelayInterval>30</RelayInterval>
+    <RelayRetryInterval>60</RelayRetryInterval>
+    <RelayUndeliveredWarning>5</RelayUndeliveredWarning>
+    <RelayUndelivered>1</RelayUndelivered>
+    <UndeliveredWarningTemplate>
+Your message could not immedeately delivered to following recipient &lt;#RECEPTIENT&gt;
+        Server returned error: "&lt;#ERROR&gt;"
+ 
+         NOTE: Server will try to deliver this message for &lt;#UNDELIVERED_HOURS&gt; hours.
+
+
+For more detail about this message, please look at the attachment data.eml.</UndeliveredWarningTemplate>
+    <UndeliveredTemplate>
+Your message didn't reach the following recipient &lt;#RECEPTIENT&gt;
+        Server returned error: "&lt;#ERROR&gt;"
+
+For more detail about this message, please look at the attachment data.eml.</UndeliveredTemplate>
+    <StoreUndeliveredMessages>True</StoreUndeliveredMessages>
+    <SMTP_LogPath />
+    <POP3_LogPath />
+    <Server_LogPath />
+    <IMAP_LogPath />
+    <IMAP_SessionIdleTimeOut>800</IMAP_SessionIdleTimeOut>
+    <IMAP_CommandIdleTimeOut>60</IMAP_CommandIdleTimeOut>
+    <IMAP_MaxBadCommands>10</IMAP_MaxBadCommands>
+    <LogIMAPCmds>False</LogIMAPCmds>
+    <IMAP_Port>143</IMAP_Port>
+    <IMAP_Threads>100</IMAP_Threads>
+    <IMAP_IPAddress>(All Unassigned)</IMAP_IPAddress>
+    <SMTP_Enabled>true</SMTP_Enabled>
+    <POP3_Enabled>true</POP3_Enabled>
+    <IMAP_Enabled>true</IMAP_Enabled>
+    <SMTP_DefaultDomain />
+  </Settings>
+</NewDataSet>

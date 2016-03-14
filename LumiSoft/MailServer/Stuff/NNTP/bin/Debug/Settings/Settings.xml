@@ -1,0 +1,21 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Settings>
+    <NNTPRoot>c:\NNTPStore\</NNTPRoot>
+    <ConnectionString></ConnectionString>
+    <DataBaseType>XML</DataBaseType>
+    <NNTP_IPAddress>(All Unassigned)</NNTP_IPAddress>
+    <NNTP_Port>119</NNTP_Port>
+    <NNTP_Threads>20000</NNTP_Threads>
+    <LogServer>True</LogServer>
+    <LogNNTPCmds>False</LogNNTPCmds>
+    <NNTP_SessionIdleTimeOut>300</NNTP_SessionIdleTimeOut>
+    <NNTP_CommandIdleTimeOut>120</NNTP_CommandIdleTimeOut>
+    <NNTP_MaxBadCommands>1000</NNTP_MaxBadCommands>
+    <NNTP_Enabled>True</NNTP_Enabled>
+    <MaxMessageSize>10</MaxMessageSize>
+    <MaxPullThreads>30</MaxPullThreads>
+    <PullInterval>30</PullInterval>
+    <PullRetryInterval>60</PullRetryInterval>
+  </Settings>
+</NewDataSet>

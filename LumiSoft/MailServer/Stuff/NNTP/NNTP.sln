@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NNTP", "NNTP.csproj", "{98055AF3-9F38-4BE3-A1ED-E0DD7952D0ED}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{98055AF3-9F38-4BE3-A1ED-E0DD7952D0ED}.Debug.ActiveCfg = Debug|.NET
+		{98055AF3-9F38-4BE3-A1ED-E0DD7952D0ED}.Debug.Build.0 = Debug|.NET
+		{98055AF3-9F38-4BE3-A1ED-E0DD7952D0ED}.Release.ActiveCfg = Release|.NET
+		{98055AF3-9F38-4BE3-A1ED-E0DD7952D0ED}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

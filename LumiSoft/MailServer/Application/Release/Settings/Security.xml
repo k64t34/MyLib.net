@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Security_List>
+    <SecurityID>6136e6a1-2069-4264-8bcf-bfa721b4c83e</SecurityID>
+    <Description>Allow SMTP access to everyone</Description>
+    <Protocol>SMTP</Protocol>
+    <Type>IP Range</Type>
+    <Action>Allow</Action>
+    <Content>0.0.0.0-255.255.255.255</Content>
+    <StartIP>0</StartIP>
+    <EndIP>255255255255</EndIP>
+  </Security_List>
+  <Security_List>
+    <SecurityID>6136e6a1-2069-4264-8bcf-bfa721b4c83a</SecurityID>
+    <Description>Allow POP3 access to everyone</Description>
+    <Protocol>POP3</Protocol>
+    <Type>IP Range</Type>
+    <Action>Allow</Action>
+    <Content>0.0.0.0-255.255.255.255</Content>
+    <StartIP>0</StartIP>
+    <EndIP>255255255255</EndIP>
+  </Security_List>
+  <Security_List>
+    <SecurityID>6136e6a1-2069-4264-8bcf-bfa721b4c83b</SecurityID>
+    <Description>Allow relay to lan</Description>
+    <Protocol>SMTP</Protocol>
+    <Type>IP Range</Type>
+    <Action>Allow Relay</Action>
+    <Content>192.168.1.1-192.168.255.255</Content>
+    <StartIP>192168001001</StartIP>
+    <EndIP>192168255255</EndIP>
+  </Security_List>
+</NewDataSet>

@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:Locale="et-EE">
+			<xs:complexType>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="Text">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="TXTID" type="xs:int" minOccurs="0" />
+								<xs:element name="EST" type="xs:string" minOccurs="0" />
+								<xs:element name="ENG" type="xs:string" minOccurs="0" />
+								<xs:element name="RUS" type="xs:string" minOccurs="0" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:complexType>
+		</xs:element>
+	</xs:schema>
+	<Text>
+		<TXTID>1</TXTID>
+		<EST>Postkast</EST>
+		<ENG>Mailbox</ENG>
+		<RUS>Почтовый ящик</RUS>
+	</Text>
+	<Text>
+		<TXTID>2</TXTID>
+		<EST>Uus kiri</EST>
+		<ENG>New message</ENG>
+		<RUS>Новая весточка</RUS>
+	</Text>
+	<Text>
+		<TXTID>3</TXTID>
+		<EST>Kaustad</EST>
+		<ENG>Folders</ENG>
+		<RUS>Директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>4</TXTID>
+		<EST>Kontaktid</EST>
+		<ENG>Contacts</ENG>
+		<RUS>Контакты</RUS>
+	</Text>
+	<Text>
+		<TXTID>5</TXTID>
+		<EST>Seaded</EST>
+		<ENG>Settings</ENG>
+		<RUS>Установки</RUS>
+	</Text>
+	<Text>
+		<TXTID>6</TXTID>
+		<EST>Kasutajatunnus</EST>
+		<ENG>User name</ENG>
+		<RUS>Имя пользователя</RUS>
+	</Text>
+	<Text>
+		<TXTID>7</TXTID>
+		<EST>Parool</EST>
+		<ENG>Password</ENG>
+		<RUS>Пароль</RUS>
+	</Text>
+	<Text>
+		<TXTID>8</TXTID>
+		<EST>Logi välja</EST>
+		<ENG>Log out</ENG>
+		<RUS>Выход</RUS>
+	</Text>
+	<Text>
+		<TXTID>9</TXTID>
+		<EST>Ava kaust</EST>
+		<ENG>Open folder</ENG>
+		<RUS>Открой директорию</RUS>
+	</Text>
+	<Text>
+		<TXTID>10</TXTID>
+		<EST>Märgista</EST>
+		<ENG>Select</ENG>
+		<RUS>Отмечай</RUS>
+	</Text>
+	<Text>
+		<TXTID>11</TXTID>
+		<EST>Eemalda märgistused</EST>
+		<ENG>Remove selection</ENG>
+		<RUS>Удали отмечетки</RUS>
+	</Text>
+	<Text>
+		<TXTID>12</TXTID>
+		<EST>Kustuta märgistatud kirjad</EST>
+		<ENG>Delete selected messages</ENG>
+		<RUS>Удали отмеченные весточки</RUS>
+	</Text>
+	<Text>
+		<TXTID>13</TXTID>
+		<EST>Kellelt</EST>
+		<ENG>From</ENG>
+		<RUS>От кого</RUS>
+	</Text>
+	<Text>
+		<TXTID>14</TXTID>
+		<EST>Pealkiri</EST>
+		<ENG>Subject</ENG>
+		<RUS>Заголовок</RUS>
+	</Text>
+	<Text>
+		<TXTID>15</TXTID>
+		<EST>Logi sisse</EST>
+		<ENG>Log in</ENG>
+		<RUS>Вход</RUS>
+	</Text>
+	<Text>
+		<TXTID>16</TXTID>
+		<EST>Suurus</EST>
+		<ENG>Size</ENG>
+		<RUS>Обём</RUS>
+	</Text>
+	<Text>
+		<TXTID>17</TXTID>
+		<EST>Selles kaustas pole ühtegi kirja</EST>
+		<ENG>There are no messages in this folder</ENG>
+		<RUS>В этой директории нет не одной весточки</RUS>
+	</Text>
+	<Text>
+		<TXTID>18</TXTID>
+		<EST>Kellele</EST>
+		<ENG>To</ENG>
+		<RUS>Кому</RUS>
+	</Text>
+	<Text>
+		<TXTID>19</TXTID>
+		<EST>Koopia</EST>
+		<ENG>Cc</ENG>
+		<RUS>Копия</RUS>
+	</Text>
+	<Text>
+		<TXTID>20</TXTID>
+		<EST>Pimekoopia</EST>
+		<ENG>Bcc</ENG>
+		<RUS>Сркытая копия</RUS>
+	</Text>
+	<Text>
+		<TXTID>21</TXTID>
+		<EST>Kirjalisandid</EST>
+		<ENG>Attachments</ENG>
+		<RUS>Приложения</RUS>
+	</Text>
+	<Text>
+		<TXTID>22</TXTID>
+		<EST>Otsi fail</EST>
+		<ENG>Find file</ENG>
+		<RUS>Поиск фаила</RUS>
+	</Text>
+	<Text>
+		<TXTID>23</TXTID>
+		<EST>Lisatud failid</EST>
+		<ENG>Added files</ENG>
+		<RUS>Приложенные фаилы</RUS>
+	</Text>
+	<Text>
+		<TXTID>24</TXTID>
+		<EST>Lisa</EST>
+		<ENG>Add</ENG>
+		<RUS>Дополни</RUS>
+	</Text>
+	<Text>
+		<TXTID>25</TXTID>
+		<EST>Eemalda</EST>
+		<ENG>Remove</ENG>
+		<RUS>Удали</RUS>
+	</Text>
+	<Text>
+		<TXTID>26</TXTID>
+		<EST>Saada</EST>
+		<ENG>Send</ENG>
+		<RUS>Отправляй</RUS>
+	</Text>
+	<Text>
+		<TXTID>27</TXTID>
+		<EST>vali kontaktidest</EST>
+		<ENG>select from contacts</ENG>
+		<RUS>выбери из контактов</RUS>
+	</Text>
+	<Text>
+		<TXTID>28</TXTID>
+		<EST>Tühjenda märgistatud kaustad</EST>
+		<ENG>Empty selected folders</ENG>
+		<RUS>Удали весточки в отмеченных директориях</RUS>
+	</Text>
+	<Text>
+		<TXTID>29</TXTID>
+		<EST>Lisa kaust</EST>
+		<ENG>Add folder</ENG>
+		<RUS>Дополни директорю</RUS>
+	</Text>
+	<Text>
+		<TXTID>30</TXTID>
+		<EST>Kokku</EST>
+		<ENG>Total</ENG>
+		<RUS>Всего</RUS>
+	</Text>
+	<Text>
+		<TXTID>31</TXTID>
+		<EST>Kustuta märgistatud kontaktid</EST>
+		<ENG>Delete selected contacts</ENG>
+		<RUS>Удали отмеченные кнтакты</RUS>
+	</Text>
+	<Text>
+		<TXTID>32</TXTID>
+		<EST>Nimi</EST>
+		<ENG>Name</ENG>
+		<RUS>Имя</RUS>
+	</Text>
+	<Text>
+		<TXTID>33</TXTID>
+		<EST>E-post</EST>
+		<ENG>E-mail</ENG>
+		<RUS>Адрес эмала</RUS>
+	</Text>
+	<Text>
+		<TXTID>34</TXTID>
+		<EST>Telefon</EST>
+		<ENG>Phone</ENG>
+		<RUS>Телефон</RUS>
+	</Text>
+	<Text>
+		<TXTID>35</TXTID>
+		<EST>Kuupäev</EST>
+		<ENG>Date</ENG>
+		<RUS>Дата</RUS>
+	</Text>
+	<Text>
+		<TXTID>36</TXTID>
+		<EST>Vasta</EST>
+		<ENG>Reply</ENG>
+		<RUS>Отвечай</RUS>
+	</Text>
+	<Text>
+		<TXTID>37</TXTID>
+		<EST>Vasta kõigile</EST>
+		<ENG>Reply to all</ENG>
+		<RUS>Отвечай всем</RUS>
+	</Text>
+	<Text>
+		<TXTID>38</TXTID>
+		<EST>Saada edasi</EST>
+		<ENG>Forward</ENG>
+		<RUS>Перешли</RUS>
+	</Text>
+	<Text>
+		<TXTID>39</TXTID>
+		<EST>Kustuta</EST>
+		<ENG>Delete</ENG>
+		<RUS>Удали</RUS>
+	</Text>
+	<Text>
+		<TXTID>40</TXTID>
+		<EST>Sulge</EST>
+		<ENG>Close</ENG>
+		<RUS>Закрой</RUS>
+	</Text>
+	<Text>
+		<TXTID>41</TXTID>
+		<EST>Kausta nimi</EST>
+		<ENG>Folder name</ENG>
+		<RUS>Имя директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>42</TXTID>
+		<EST>Kirju</EST>
+		<ENG>Messages</ENG>
+		<RUS>Весточек</RUS>
+	</Text>
+	<Text>
+		<TXTID>43</TXTID>
+		<EST>Uusi</EST>
+		<ENG>New</ENG>
+		<RUS>Новых</RUS>
+	</Text>
+	<Text>
+		<TXTID>45</TXTID>
+		<EST>Ava</EST>
+		<ENG>Open</ENG>
+		<RUS>Открой</RUS>
+	</Text>
+	<Text>
+		<TXTID>46</TXTID>
+		<EST>Tühjenda</EST>
+		<ENG>Empty</ENG>
+		<RUS>Упустоши</RUS>
+	</Text>
+	<Text>
+		<TXTID>47</TXTID>
+		<EST>Salvesta</EST>
+		<ENG>Save</ENG>
+		<RUS>Запиши</RUS>
+	</Text>
+	<Text>
+		<TXTID>48</TXTID>
+		<EST>Eesnimi</EST>
+		<ENG>Forename</ENG>
+		<RUS>Имя</RUS>
+	</Text>
+	<Text>
+		<TXTID>49</TXTID>
+		<EST>Perekonnanimi</EST>
+		<ENG>Surname</ENG>
+		<RUS>Фамилия</RUS>
+	</Text>
+	<Text>
+		<TXTID>50</TXTID>
+		<EST>VIGA!!! Vale kasutajanimi või parool.</EST>
+		<ENG>ERROR!!! Incorrect user name or password.</ENG>
+		<RUS>Ошибка!!! Неправильный пароль или имя пользователя</RUS>
+	</Text>
+	<Text>
+		<TXTID>51</TXTID>
+		<EST>Aseta kirjad kausta...</EST>
+		<ENG>Put messages in folder...</ENG>
+		<RUS>Запиши весточки в директопию...</RUS>
+	</Text>
+	<Text>
+		<TXTID>52</TXTID>
+		<EST>Ühtegi kirja pole märgistatud</EST>
+		<ENG>No messages were selected</ENG>
+		<RUS>Не одной весточки не отмеченно</RUS>
+	</Text>
+	<Text>
+		<TXTID>53</TXTID>
+		<EST>Kas Te olete kindel, et tahate märgistatud kirjad kustutada</EST>
+		<ENG>Are you sure, that you want to delete selected messages</ENG>
+		<RUS>Вы уверенны в удалении отмеченных весточек</RUS>
+	</Text>
+	<Text>
+		<TXTID>54</TXTID>
+		<EST>Kas Te olete kindel, et tahate märgistatud kirjad asetada kausta</EST>
+		<ENG>Are you sure, that you want to move selected messages to folder</ENG>
+		<RUS>Вы уверенны в записи в директорию отмеченных весточек</RUS>
+	</Text>
+	<Text>
+		<TXTID>55</TXTID>
+		<EST>Kas Te olete kindel, et tahate seda kirja kustutada</EST>
+		<ENG>Are you sure, that you want to delete this message</ENG>
+		<RUS>Вы уверенны в удалении утой весточки</RUS>
+	</Text>
+	<Text>
+		<TXTID>56</TXTID>
+		<EST>Vali fail, mida lisada nimekirja</EST>
+		<ENG>Select file, you want to add to list</ENG>
+		<RUS>Выберите фаил. который хотите дополнть в список</RUS>
+	</Text>
+	<Text>
+		<TXTID>57</TXTID>
+		<EST>Lisatud failide nimekiri on tühi</EST>
+		<ENG>Added files list is empty</ENG>
+		<RUS>Список дополных фаилов пуст</RUS>
+	</Text>
+	<Text>
+		<TXTID>58</TXTID>
+		<EST>Vali fail, mida eemaldada nimekirjast</EST>
+		<ENG>Select file, you want to remove from list</ENG>
+		<RUS>Выберите фаил. который хотите удалить из списка</RUS>
+	</Text>
+	<Text>
+		<TXTID>59</TXTID>
+		<EST>Ühtegi kausta pole märgistatud</EST>
+		<ENG>No folders were selected</ENG>
+		<RUS>Нет не одной отмеченной директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>60</TXTID>
+		<EST>Kas Te olete kindel, et tahate märgistatud kaustad tühjendada</EST>
+		<ENG>Are you sure, that you want to empty selected folders</ENG>
+		<RUS>Вы уверенны в упустошении отмеченных директорий</RUS>
+	</Text>
+	<Text>
+		<TXTID>61</TXTID>
+		<EST>Muuda</EST>
+		<ENG>Rename</ENG>
+		<RUS>Переименуй</RUS>
+	</Text>
+	<Text>
+		<TXTID>62</TXTID>
+		<EST>Kas Te olete kindel, et tahate seda kausta kustutada</EST>
+		<ENG>Are you sure, that you want to delete this folder</ENG>
+		<RUS>Вы уверенны в удалении этой директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>63</TXTID>
+		<EST>Kas Te olete kindel, et tahate selle kausta kirjad kustutada</EST>
+		<ENG>Are you sure, that you want to delete all messages in this folder</ENG>
+		<RUS>Вы уверенны в удалении всех весточек в етой директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>64</TXTID>
+		<EST>Tühista</EST>
+		<ENG>Cancel</ENG>
+		<RUS>Прекрати</RUS>
+	</Text>
+	<Text>
+		<TXTID>65</TXTID>
+		<EST>Vana kausta nimi</EST>
+		<ENG>Old folder name</ENG>
+		<RUS>Старое имя директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>66</TXTID>
+		<EST>Uus kausta nimi</EST>
+		<ENG>New folder name</ENG>
+		<RUS>Новое имя директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>67</TXTID>
+		<EST>Lisa kontakt</EST>
+		<ENG>Add contact</ENG>
+		<RUS>Дополни контакт</RUS>
+	</Text>
+	<Text>
+		<TXTID>68</TXTID>
+		<EST>Kontaktid puuduvad</EST>
+		<ENG>No contacts</ENG>
+		<RUS>Отсутсвуют контакты</RUS>
+	</Text>
+	<Text>
+		<TXTID>69</TXTID>
+		<EST>Ühtegi kontakti pole märgistatud</EST>
+		<ENG>No contacts were selected</ENG>
+		<RUS>Отсутсвуют отмеченные контакты</RUS>
+	</Text>
+	<Text>
+		<TXTID>70</TXTID>
+		<EST>Kas Te olete kindel, et tahate märgistatud kontaktid kustutada</EST>
+		<ENG>Are you sure, that you want to delete selected contacts</ENG>
+		<RUS>Вы уверенны в удалении отмеченных контактов</RUS>
+	</Text>
+	<Text>
+		<TXTID>71</TXTID>
+		<EST>Mobiiltelefon</EST>
+		<ENG>Mobile phone</ENG>
+		<RUS>Мобильный телефон</RUS>
+	</Text>
+	<Text>
+		<TXTID>72</TXTID>
+		<EST>Sisesta kontakti eesnimi</EST>
+		<ENG>Insert contact forename</ENG>
+		<RUS>Введи имя контакта</RUS>
+	</Text>
+	<Text>
+		<TXTID>73</TXTID>
+		<EST>Sisesta kontakti e-posti aadress</EST>
+		<ENG>Insert contact e-mail address</ENG>
+		<RUS>Введи адрес эмаила лонтакта</RUS>
+	</Text>
+	<Text>
+		<TXTID>74</TXTID>
+		<EST>Kas Te olete kindel, et tahate seda kontakti kustutada</EST>
+		<ENG>Are you sure, that you want to delete this contact</ENG>
+		<RUS>Вы уверенны в удалении этого контакта</RUS>
+	</Text>
+	<Text>
+		<TXTID>75</TXTID>
+		<EST>Märgista märkeruudud, kellele soovid kirja saata</EST>
+		<ENG>Select checkboxes, to whom you want to send message</ENG>
+		<RUS>Отметь тех. кому хотите отправить весточку</RUS>
+	</Text>
+	<Text>
+		<TXTID>76</TXTID>
+		<EST>Sulge aken</EST>
+		<ENG>Close window</ENG>
+		<RUS>Закрой окно</RUS>
+	</Text>
+	<Text>
+		<TXTID>77</TXTID>
+		<EST>Sisesta kausta nimi</EST>
+		<ENG>Insert folder name</ENG>
+		<RUS>Введи имя директории</RUS>
+	</Text>
+	<Text>
+		<TXTID>78</TXTID>
+		<EST>Sisesta kirja saaja aadress</EST>
+		<ENG>Insert message receiver address</ENG>
+		<RUS>Введи адрес получателя</RUS>
+	</Text>
+	<Text>
+		<TXTID>79</TXTID>
+		<EST>Kasutaja e-posti aadress</EST>
+		<ENG>User e-mail address</ENG>
+		<RUS>Эмаил ползователя</RUS>
+	</Text>
+	<Text>
+		<TXTID>80</TXTID>
+		<EST>Aseta kustutatud kirjad kausta</EST>
+		<ENG>Put deleted messages to folder</ENG>
+		<RUS>Запиши в директории удалённых весток</RUS>
+	</Text>
+	<Text>
+		<TXTID>81</TXTID>
+		<EST>Aseta saadetud kirjad kausta</EST>
+		<ENG>Put sent messages to folder</ENG>
+		<RUS>Запиши в директории отпраленных весток</RUS>
+	</Text>
+</NewDataSet>

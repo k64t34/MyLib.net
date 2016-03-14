@@ -1,0 +1,719 @@
+﻿using System;
+using System.Net.Sockets;
+using System.Collections;
+using System.Threading;
+using System.Text.RegularExpressions;
+public enum BodyType
+	{
+		/// <summary>
+		/// ASCII body.
+		/// </summary>
+		x7_bit = 1,
+
+		/// <summary>
+		/// ANSI body.
+		/// </summary>
+		x8_bit = 2,
+
+		/// <summary>
+		/// Binary body.
+		/// </summary>
+		binary = 4,
+}
+
+
+
+
+
+
+
+
+
+
+internal class _Parameter
+{
+	private string m_ParamName  = "";
+	private string m_ParamValue = "";
+
+	/// <summary>
+	/// Default constructor.
+	/// </summary>
+	/// <param name="paramName"></param>
+	/// <param name="paramValue"></param>
+	public _Parameter(string paramName,string paramValue)
+	{
+		m_ParamName  = paramName;
+		m_ParamValue = paramValue;
+	}
+
+	#region Properties implementation
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public string ParamName
+	{
+		get{ return m_ParamName; }
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public string ParamValue
+	{
+		get{ return m_ParamValue; }
+	}
+
+	#endregion
+}
+
+
+
+/// <summary>
+/// Summary description for _ParamParser.
+/// </summary>
+internal class _ParamParser
+{
+//	public _ParamParser()
+//	{			
+//	}
+
+
+	#region function Paramparser_NameValue
+
+	/// <summary>
+	/// Parses name-value params.
+	/// </summary>
+	/// <param name="source">Parse source.</param>
+	/// <param name="expressions">Expressions importance order. NOTE: must contain param and value groups.</param>
+	public static _Parameter[] Paramparser_NameValue(string source,string[] expressions)
+	{
+		string tmp = source.Trim();
+		ArrayList param = new ArrayList();
+		foreach(string exp in expressions){
+			Regex r = new Regex(exp,RegexOptions.IgnoreCase);
+			Match m = r.Match(tmp);				
+			if(m.Success){
+				param.Add(new _Parameter(m.Result("${param}").Trim(),m.Result("${value}")));
+
+				// remove matched string part form tmp
+				tmp = tmp.Replace(m.ToString(),"").Trim();
+			}				
+		}
+
+		// There are some unparsed params, add them as UnParsed
+		if(tmp.Trim().Length > 0){
+			param.Add(new _Parameter("UNPARSED",tmp));
+		}
+
+		_Parameter[] retVal = new _Parameter[param.Count];
+		param.CopyTo(retVal);
+
+		return retVal;
+	}
+
+	#endregion
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//*********************************************
+public class SMTP_Session{
+//*********************************************
+public Socket  ClientSocket     = null;
+private string SessionID = null;
+private SMTPServer Server = null;
+private string        m_RemoteHostIp   = ""; 
+private string        m_RemoteHostName = ""; 
+//private string        m_Reverse_path      = "";      // Holds sender's reverse path.
+//private Hashtable     m_Forward_path      = null;    // Holds Mail to.
+//private bool          m_Authenticated     = false;   // Holds authentication flag.
+//private int           m_BadCmdCount       = 0;       // Holds number of bad commands.
+private BodyType      m_BodyType;
+//private MemoryStream  m_MsgStream         = null;
+//private bool          m_ChunkingErrors   = false;
+//		private bool          m_Pipelining        = false;
+//private DateTime      m_SessionStartTime;
+private SMTP_Cmd_Validator m_CmdValidator = null;
+//private _LogWriter    m_pLogWriter        = null;
+//private object        m_Tag               = null;
+
+//*********************************************
+internal SMTP_Session(Socket clientSocket,SMTPServer server,string sessionID)		{			
+//*********************************************	
+ClientSocket	= clientSocket;
+Server   		= server;
+SessionID       = sessionID;
+//*m_BodyType         = BodyType.x7_bit;
+//m_Forward_path     = new Hashtable();
+m_CmdValidator     = new SMTP_Cmd_Validator();
+//m_pLogWriter       = logWriter;
+//m_SessionStartTime = DateTime.Now;*/
+}	
+//*********************************************		
+//public IPAddress GetClientIP() {
+//*********************************************	
+//}
+//*********************************************
+public void StartProcessing() {
+//*********************************************	
+#if (DEBUG)
+Console.WriteLine("StartProcessing");
+#endif
+try
+	{
+	m_RemoteHostIp = SocketIO.ParseIP_from_EndPoint(ClientSocket.RemoteEndPoint.ToString());				
+	m_RemoteHostName = SocketIO.GetHostName(m_RemoteHostIp);
+	SendData("220 " + System.Net.Dns.GetHostName() + " Service ready\r\n");
+	long lastCmdTime = DateTime.Now.Ticks;	
+	string lastCmd  = "";
+	while(true)
+		{
+		if(ClientSocket.Available > 0)
+			{
+			try
+				{
+				lastCmd = ReadLine();
+				if(SwitchCommand(lastCmd))break;				
+				}
+			catch
+				{
+				}
+			lastCmdTime = DateTime.Now.Ticks;
+			}
+		else{
+			//----- Session timeout stuff ------------------------------------------------//
+			if(DateTime.Now.Ticks > lastCmdTime + Server.vSessionTimeout){				
+				// Notify for closing
+				Server.ServerLog(String.Format("{0} SMTP Server session {1} timeout",DateTime.Now,SessionID));
+				SendData("421 Session timeout, closing transmission channel\r\n");
+				break;
+			}
+		
+			// Wait 100ms to save CPU, otherwise while loop may take 100% CPU. 
+			Thread.Sleep(100);
+			//---------------------------------------------------------------------------//
+			}
+		}
+	}
+catch
+	{
+	}
+finally
+	{
+	//->m_pSMTP_Server.RemoveSession(this.SessionID,m_pLogWriter);	
+	if(ClientSocket.Connected)ClientSocket.Close();			
+	}
+}
+//*********************************************		
+private bool SwitchCommand(string SMTP_commandTxt)		{
+//*********************************************			
+//---- Parse command --------------------------------------------------//
+string[] cmdParts = SMTP_commandTxt.TrimStart().Split(new char[]{' '});
+string SMTP_command = cmdParts[0].ToUpper().Trim();
+string argsText = SocketIO.GetArgsText(SMTP_commandTxt,SMTP_command);
+//---------------------------------------------------------------------//
+
+switch(SMTP_command)
+{
+	case "HELO":
+		HELO(argsText);
+		break;
+/*	case "EHLO":
+		EHLO(argsText);
+		break;
+	case "AUTH":
+		AUTH(argsText);
+		break;*/
+	case "MAIL":
+		MAIL(argsText);
+		break;		
+	case "RCPT":
+		//RCPT(argsText);
+		break;
+	case "DATA":
+		//DATA(argsText);
+		break;
+
+/*	case "BDAT":
+		BDAT(argsText);
+		break;
+
+	case "RSET":
+		RSET(argsText);
+		break;
+
+	case "VRFY":
+		VRFY();
+		break;
+
+	case "EXPN":
+		EXPN();
+		break;
+
+	case "HELP":
+		HELP();
+		break;
+
+	case "NOOP":
+		NOOP();
+	break;
+*/	
+	case "QUIT":
+		QUIT(argsText);
+		return true;
+							
+	default:					
+		SendData("500 command unrecognized\r\n");
+
+		//---- Check that maximum bad commands count isn't exceeded ---------------//
+		/*if(m_BadCmdCount > m_pSMTP_Server.MaxBadCommands-1){
+			SendData("421 Too many bad commands, closing transmission channel\r\n");
+			return true;
+		}
+		m_BadCmdCount++;*/
+		//-------------------------------------------------------------------------//
+
+		break;				
+}
+
+return false;
+}
+//*********************************************	
+private void QUIT(string argsText)		{
+//*********************************************		
+/* RFC 2821 4.1.1
+NOTE:
+	Several commands (RSET, DATA, QUIT) are specified as not permitting
+	parameters.  In the absence of specific extensions offered by the
+	server and accepted by the client, clients MUST NOT send such
+	parameters and servers SHOULD reject commands containing them as
+	having invalid syntax.
+*/
+
+if(argsText.Length > 0){
+	SendData("500 Syntax error. Syntax:<QUIT>\r\n");
+	return;
+}
+
+/* RFC 2821 4.1.1.10 QUIT (QUIT)
+NOTE:
+	This command specifies that the receiver MUST send an OK reply, and
+	then close the transmission channel.
+*/
+
+// reply: 221 - Close transmission cannel
+SendData("221 Service closing transmission channel\r\n");			
+}
+//*********************************************	
+private void HELO(string argsText)		{
+//*********************************************		
+/* Rfc 2821 4.1.1.1
+These commands, and a "250 OK" reply to one of them, confirm that
+both the SMTP client and the SMTP server are in the initial state,
+that is, there is no transaction in progress and all state tables and
+buffers are cleared.
+Syntax:
+	 "HELO" SP Domain CRLF
+*/
+
+ResetState();
+
+SendData("250 " + System.Net.Dns.GetHostName() + " Hello [" + m_RemoteHostIp + "]\r\n");
+m_CmdValidator.Helo_ok = true;
+}
+//*********************************************		
+private void MAIL(string argsText)		{
+//*********************************************			
+	/* RFC 2821 3.3
+	NOTE:
+		This command tells the SMTP-receiver that a new mail transaction is
+		starting and to reset all its state tables and buffers, including any
+		recipients or mail data.  The <reverse-path> portion of the first or
+		only argument contains the source mailbox (between "<" and ">"
+		brackets), which can be used to report errors (see section 4.2 for a
+		discussion of error reporting).  If accepted, the SMTP server returns
+		 a 250 OK reply.
+		 
+		MAIL FROM:<reverse-path> [SP <mail-parameters> ] <CRLF>
+		reverse-path = "<" [ A-d-l ":" ] Mailbox ">"
+		Mailbox = Local-part "@" Domain
+		
+		body-value ::= "7BIT" / "8BITMIME" / "BINARYMIME"
+		
+		Examples:
+			C: MAIL FROM:<ned@thor.innosoft.com>
+			C: MAIL FROM:<ned@thor.innosoft.com> SIZE=500000 BODY=8BITMIME
+	*/
+
+	if(!m_CmdValidator.MayHandle_MAIL){
+		if(m_CmdValidator.MailFrom_ok){
+			SendData("503 Sender already specified\r\n");
+		}
+		else{
+			SendData("503 Bad sequence of commands\r\n");
+		}
+		return;
+	}
+
+	//------ Parse parameters -------------------------------------------------------------------//
+	string   reverse_path = "";
+	string   senderEmail  = "";
+	long     messageSize  = 0;
+	BodyType bodyType     = BodyType.x7_bit;
+	bool     isFromParam  = false;
+
+	//--- regex param parse strings
+	string[] exps = new string[3];
+	exps[0] = @"(?<param>FROM)[\s]{0,}:\s{0,}<?\s{0,}(?<value>[\w\@\.\-\*\+\=\#\/]*)\s{0,}>?(\s|$)";
+	exps[1] = @"(?<param>SIZE)[\s]{0,}=\s{0,}(?<value>[\w]*)(\s|$)"; 
+	exps[2] = @"(?<param>BODY)[\s]{0,}=\s{0,}(?<value>[\w]*)(\s|$)";
+
+	_Parameter[] param = _ParamParser.Paramparser_NameValue(argsText,exps);
+	foreach(_Parameter parameter in param){
+		// Possible params:
+		// FROM:
+		// SIZE=
+		// BODY=
+		switch(parameter.ParamName.ToUpper()) 
+		{
+			//------ Required paramters -----//
+			case "FROM":
+		//		if(parameter.ParamValue.Length == 0){
+		//			SendData("501 Sender address isn't specified. Syntax:{MAIL FROM:<address> [SIZE=msgSize]}\r\n");
+		//			return;
+		//		}
+		//		else{
+					reverse_path = parameter.ParamValue;
+					isFromParam = true;
+		//		}
+				break;
+
+			//------ Optional parameters ---------------------//
+			case "SIZE":
+				if(parameter.ParamValue.Length == 0){
+					SendData("501 SIZE parameter value isn't specified. Syntax:{MAIL FROM:<address> [SIZE=msgSize] [BODY=8BITMIME]}\r\n");
+					return;
+				}
+				else{
+					if(Core.IsNumber(parameter.ParamValue)){
+						messageSize = Convert.ToInt64(parameter.ParamValue);
+					}
+					else{
+						SendData("501 SIZE parameter value is invalid. Syntax:{MAIL FROM:<address> [SIZE=msgSize] [BODY=8BITMIME]}\r\n");
+					}
+				}
+				break;
+
+			case "BODY":
+				if(parameter.ParamValue.Length == 0){
+					SendData("501 BODY parameter value isn't specified. Syntax:{MAIL FROM:<address> [SIZE=msgSize] [BODY=8BITMIME]}\r\n");
+					return;
+				}
+				else{
+					switch(parameter.ParamValue.ToUpper()){
+						case "7BIT":
+							bodyType = BodyType.x7_bit;
+							break;
+						case "8BITMIME":
+							bodyType = BodyType.x8_bit;
+							break;
+						case "BINARYMIME":
+							bodyType = BodyType.binary;									
+							break;
+						default:
+							SendData("501 BODY parameter value is invalid. Syntax:{MAIL FROM:<address> [BODY=(7BIT/8BITMIME)]}\r\n");
+							return;
+					}
+				}
+				break;
+
+			default:
+				SendData("501 Error in parameters. Syntax:{MAIL FROM:<address> [SIZE=msgSize] [BODY=8BITMIME]}\r\n");
+				return;				
+		}
+	}
+	
+	// If required parameter 'FROM:' is missing
+	if(!isFromParam){
+		SendData("501 Required param FROM: is missing. Syntax:{MAIL FROM:<address> [SIZE=msgSize] [BODY=8BITMIME]}\r\n");
+		return;
+	}
+
+	// Parse sender's email address
+	senderEmail = reverse_path;
+	//---------------------------------------------------------------------------------------------//
+	
+	//--- Check message size
+	if(Server.MaxMessageSize > messageSize){
+		// Check if sender is ok
+		//if(Server.OnValidate_MailFrom(this,reverse_path,senderEmail)){		
+			SendData("250 OK <" + senderEmail + "> Sender ok\r\n");
+								
+			// See note above
+			ResetState();
+
+			// Store reverse path
+			//m_Reverse_path = reverse_path;
+			m_CmdValidator.MailFrom_ok = true;
+
+			//-- Store params
+			m_BodyType = bodyType;
+		//}			
+		//else{				
+		//	SendData("550 You are refused to send mail here\r\n");
+		//}
+	}
+	else{
+		SendData("552 Message exceeds allowed size\r\n");
+	}			
+}
+//*********************************************		
+private void ResetState()		{
+//*********************************************			
+//--- Reset variables
+//m_BodyType = BodyType.x7_bit;
+//m_Forward_path.Clear();
+//m_Reverse_path  = "";
+//		m_Authenticated = false; // ??? must clear or not, no info.
+m_CmdValidator.Reset();
+m_CmdValidator.Helo_ok = true;
+}		
+//*********************************************	
+private string ReadLine()		{
+//*********************************************		
+string line = SocketIO.ReadLine(ClientSocket,500,Server.vSessionTimeout);
+Server.ServerLog(String.Format("{0} SMTP Server sesion {1}. Recive data {2} bytes\n<-{3}",DateTime.Now,SessionID,line.Length,line/*.Substring(0,128)*/));
+return line;
+}
+//*********************************************
+private void SendData(string data)		{	
+//*********************************************	
+Byte[] byte_data = System.Text.Encoding.ASCII.GetBytes(data.ToCharArray());
+Server.ServerLog(String.Format("{0} SMTP Server session {1} send data {2} bytes \n->{3}",DateTime.Now,SessionID,byte_data.Length,data.Replace("\r\n","<CRLF>")));
+int nCount = ClientSocket.Send(byte_data,byte_data.Length,0);
+if(nCount != byte_data.Length)
+	{
+	Server.ServerLog(String.Format("{0} SMTP Server sesion {1} Smtp.SendData sended {2} bytes less data than requested {3} bytes !",DateTime.Now,SessionID,nCount,byte_data.Length));
+	throw new Exception("Smtp.SendData sended less data than requested !");	
+	}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+internal class SMTP_Cmd_Validator
+	{
+		private bool m_Helo_ok       = false;
+		private bool m_Authenticated = false;
+		private bool m_MailFrom_ok   = false;
+		private bool m_RcptTo_ok     = false;
+		private bool m_BdatLast_ok   = false;
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public SMTP_Cmd_Validator()
+		{			
+		}
+
+
+		#region function Reset
+
+		/// <summary>
+		/// Resets state.
+		/// </summary>
+		public void Reset()
+		{
+			m_Helo_ok       = false;
+			m_Authenticated = false;
+			m_MailFrom_ok   = false;
+			m_RcptTo_ok     = false;
+			m_BdatLast_ok   = false;
+		}
+
+		#endregion
+
+
+		#region Properties Implementation
+
+		/// <summary>
+		/// Gets if may handle MAIL command.
+		/// </summary>
+		public bool MayHandle_MAIL
+		{
+			get{ return m_Helo_ok && !MailFrom_ok; }
+		}
+
+		/// <summary>
+		/// Gets if may handle RCPT command.
+		/// </summary>
+		public bool MayHandle_RCPT
+		{
+			get{ return MailFrom_ok; }
+		}
+
+		/// <summary>
+		/// Gets if may handle DATA command.
+		/// </summary>
+		public bool MayHandle_DATA
+		{
+			get{ return RcptTo_ok; }
+		}
+
+		/// <summary>
+		/// Gets if may handle BDAT command.
+		/// </summary>
+		public bool MayHandle_BDAT
+		{
+			get{ return RcptTo_ok && !m_BdatLast_ok; }
+		}
+
+		/// <summary>
+		/// Gets if may handle AUTH command.
+		/// </summary>
+		public bool MayHandle_AUTH
+		{
+			get{ return !m_Authenticated; }
+		}
+
+		/// <summary>
+		/// Gest or sets if HELO command handled.
+		/// </summary>
+		public bool Helo_ok
+		{
+			get{ return m_Helo_ok; }
+
+			set{ m_Helo_ok = value; }
+		}
+
+		/// <summary>
+		/// Gest or sets if AUTH command handled.
+		/// </summary>
+		public bool Authenticated
+		{
+			get{ return m_Authenticated; }
+
+			set{ m_Authenticated = value; }
+		}
+
+		/// <summary>
+		/// Gest or sets if MAIL command handled.
+		/// </summary>
+		public bool MailFrom_ok
+		{
+			get{ return m_MailFrom_ok; }
+
+			set{ m_MailFrom_ok = value; }
+		}
+
+		/// <summary>
+		/// Gest or sets if RCPT command handled.
+		/// </summary>
+		public bool RcptTo_ok
+		{
+			get{ return m_RcptTo_ok; }
+
+			set{ m_RcptTo_ok = value; }
+		}
+
+		/// <summary>
+		/// Gest or sets if BinaryMime.
+		/// </summary>
+		public bool BDAT_Last_ok
+		{
+			get{ return m_BdatLast_ok; }
+
+			set{ m_BdatLast_ok = value; }
+		}
+
+		#endregion
+
+	}
+

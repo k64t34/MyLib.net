@@ -1,0 +1,78 @@
+
+
+//----------------------------------------
+version: 0.10 (18.09.2003)
+        *) New: Make methos ShowControlBar,HideControlBar public. Add possibility to expand and collapse control bar.
+
+
+
+
+//---  30.05.2003
+Removed ISupportInitialize interface in all controls.
+******************************************************
+NOTE: LumiSoft.UI. ... ISupportInitialize.BeginInit() and .EndInit() methods must be removed manually from all Forms files.
+You can also try tool UI_rem_SupportInitialize (in tools folder) to convert files.
+
+It's neccesary to remove these rows or otherwise cast error is raised.
+
+Sorry for trouble.
+******************************************************
+
+
+//--- 16.05.2003
+WTextBoxBase removed ISupportInitialize, this may cause some trouble for inhereted controls which are based on editbox.
+Just remove similar row manually from your project ((System.ComponentModel.ISupportInitialize)(this.m_pTextBox)).BeginInit();
+
+WDatePicker didn't close pop when to click button agian.
+
+//--- 14.05.2003
+WNumeric accepts now ',' or '.'. Now if you press ',' or '.' and it already exists, current position in textbox is moved after it. 
+Esc key didn't close popup.
+
+//--- 06.05.2003
+WCombo didn't closed popup when to push dropdwon button.
+WCombo added FindStringExact() method
+WFrame.ControlPaneWitdh -> ControlPaneWidth
+
+//--- 05.05.2003
+WEditBox didn't color negative values right.
+
+//--- 22.04.2003
+WTextBoxbase.Text to internal variable -> now if edit(combo,buttonedit,...) controls not visible gives right value,
+before it gave "" value.  
+
+Added FindString(),SelectionStart,SelectionLentgth for WCombobox
+
+//--- 16.04.2003
+
+Moved to NET 1.1. 
+
+//--- 14.04.2003
+ViewStyle KnownColor -> RGB - different windows versions showed colors differently.
+
+DateTimePicker pop dind't resize correctly, clendar font isn't default.
+
+SpinEdit.Enabled - didn't changes ViewStyle colors.
+
+
+//--- 0.14 (01.03.2003)
+DateTime didn't open DatePopUp with + key.
+
+//--- 0.13                           
+WButtonEdit,WComboBox,WDatePicker readonly -> EditType(Editable,Selectable,ReadOnly)
+(See sample app,to see behaviour)
+
+Outlook bar Bars.Clear() fixed (before fix program crashed)  thanks to (Ondra Vindy).
+(Didn't reset active bar)
+
+
+//--- 0.12                           
+PopUps didn't closed when to move parent form.
+(This happened only if controls was nested)
+
+
+//--- 0.11                           
+Tabs.Add(string caption,object tag) - didn't store tag.(Tag was always null)
+
+//--- 0.1                           
+Tab control imageslist support added
