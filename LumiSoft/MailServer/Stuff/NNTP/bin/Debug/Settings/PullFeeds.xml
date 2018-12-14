@@ -1,9 +1,0 @@
-<?xml version="1.0" standalone="yes"?>
-<NewDataSet>
-  <Feeds>
-    <Server>newscache4.freenet.de</Server>
-    <Newsgroups>microsoft*</Newsgroups>
-    <LastSync>4.09.2003 11:25:35</LastSync>
-    <Enabled>1</Enabled>
-  </Feeds>
-</NewDataSet>
