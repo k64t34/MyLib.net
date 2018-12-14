@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 public class FolderIO
 {
+const string Version="1.1"	;
 //******************************************************************************
 public static void CheckFolderString(ref string s){
 //******************************************************************************
@@ -35,7 +37,7 @@ else
 private static void CopyDirectory(string sourcePath, string destinationPath)	{
 //******************************************************************************		
 //-----------------------------------------------------------------------
-System.IO.DirectoryInfo sourceDirectoryInfo = new System.IO.DirectoryInfo(sourcePath);
+/*System.IO.DirectoryInfo sourceDirectoryInfo = new System.IO.DirectoryInfo(sourcePath);
 
 // If the destination folder don't exist then create it
 if (!System.IO.Directory.Exists(destinationPath)) {
@@ -55,7 +57,7 @@ foreach (FileSystemInfo fileSystemInfo_loopVariable in sourceDirectoryInfo.GetFi
 		// Recursively call the mothod to copy all the neste folders
 		CopyDirectory(fileSystemInfo.FullName, destinationFileName);
 	}
-}
+}*/
 }
 //******************************************************************************
 public static string TrimEndBackslash(string Folder){return Folder.TrimEnd(new char[]{'\\'});}
