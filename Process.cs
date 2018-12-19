@@ -24,6 +24,11 @@ namespace K64t
         //Console.ReadLine();	
 		return parentId;
 		}
+        public static uint GetParentProcessID(uint PID){
+        	return GetParentProcessID((int)PID);
+		}
+        
+        
 	}
 	
 }
