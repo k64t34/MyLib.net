@@ -62,11 +62,14 @@ public class NetIO
 	netstat.StartInfo.FileName = netstat.StartInfo.WorkingDirectory + "cmd.exe";			
 	netstat.StartInfo.UseShellExecute=false;	//https://msdn.microsoft.com/ru-ru/library/system.diagnostics.processstartinfo.workingdirectory(v=vs.110).aspx			
 	//ok netstat.StartInfo.Arguments+="/C netstat -nao | findstr 27015";
-	netstat.StartInfo.Arguments+="/Q /C FOR /F \"tokens=5\" %p IN ('netstat -nao ^| findstr /i LISTENING ^| findstr 27015') do echo %p ";			
+	netstat.StartInfo.Arguments+="/Q /C FOR /F \"tokens=5\" %p IN ('netstat -nao ^| findstr /i LISTENING ^| findstr "+Port+"') do echo %p ";			
 	#if (DEBUG)
 	Debug.WriteLine("GetPortProcessID WorkingDirectory={0}",netstat.StartInfo.WorkingDirectory);
 	Debug.WriteLine("GetPortProcessID FileName={0}",netstat.StartInfo.FileName);
-	Debug.WriteLine(netstat.StartInfo.Arguments);				
+	Debug.WriteLine(netstat.StartInfo.Arguments);
+    Console.WriteLine("GetPortProcessID WorkingDirectory={0}",netstat.StartInfo.WorkingDirectory);
+	Console.WriteLine("GetPortProcessID FileName={0}",netstat.StartInfo.FileName);
+	Console.WriteLine(netstat.StartInfo.Arguments);					
 	#endif	
 	try 
 		{					
@@ -74,13 +77,16 @@ public class NetIO
     	}        	
 	catch (Exception e)
     	{
-    		Console.ForegroundColor=ConsoleColor.Red;	        	    
-    	    Console.WriteLine(e.Message);
-    	    Console.ResetColor();
+			#if (DEBUG)
+    	    Debug.WriteLine(e.Message);
+    	    Console.WriteLine("GetPortProcessID ERR {0}",e.Message);
+    	    #endif
     	}
 	
-	string output =netstat.StandardOutput.ReadToEnd();  
+	string output =netstat.StandardOutput.ReadToEnd();
+		
 	string err =netstat.StandardError.ReadToEnd();	
+	
 	#if (DEBUG)
 	Debug.WriteLine(output);			
 	Debug.WriteLine(err);			
@@ -89,6 +95,8 @@ public class NetIO
 	if (netstat.ExitCode>0) 
     	{
 		#if (DEBUG)
+		Console.WriteLine(output);
+	    Console.WriteLine(err);
     	Console.ForegroundColor=ConsoleColor.Red;
     	Console.WriteLine("ERRORLEVEL "+netstat.ExitCode);
     	Console.ResetColor();
