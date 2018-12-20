@@ -27,8 +27,23 @@ namespace K64t
         public static uint GetParentProcessID(uint PID){
         	return GetParentProcessID((int)PID);
 		}
-        
-        
+        /// <summary>
+        /// Detect that process with given id is running.
+        /// </summary>
+        /// <returns>True if running, false else</returns>
+        ///
+        public static bool  IsProcessRunning(int PID){
+        	bool IsProcessRunning=true;
+			Process MyProcess=null;
+			try 
+			{
+				MyProcess = Process.GetProcessById(PID);
+				if (MyProcess==null) IsProcessRunning=false;
+				else if (MyProcess.Id!=PID) IsProcessRunning=false;				
+			}
+			catch (Exception){IsProcessRunning=false;}
+        	return IsProcessRunning;
+		}
 	}
 	
 }
